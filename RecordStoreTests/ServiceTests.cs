@@ -82,7 +82,7 @@ namespace RecordStoreTests
             };
             Album emptyAlbum = new Album();
             
-            modelMock.Setup(m => m.TryPostAlbum(newAlbum, out testFeedback)).Returns(newAlbum);
+            modelMock.Setup(m => m.PostAlbum(newAlbum, out testFeedback)).Returns(newAlbum);
 
             var result = albumService.TryPostAlbum(newAlbum, out testFeedback);
 
@@ -112,7 +112,7 @@ namespace RecordStoreTests
                 Name = "ARTPOP"
             };
             
-            modelMock.Setup(m => m.TryPostAlbum(newAlbum, out testFeedback)).Returns(expectedEditedAlbum);
+            modelMock.Setup(m => m.PostAlbum(newAlbum, out testFeedback)).Returns(expectedEditedAlbum);
 
             var result = albumService.TryPostAlbum(newAlbum, out testFeedback);
 
@@ -144,11 +144,11 @@ namespace RecordStoreTests
                 Name = "ARTPOP"
             };
 
-            modelMock.Setup(m => m.TryPostAlbum(newAlbum, out testFeedback)).Returns(newAlbum);
+            modelMock.Setup(m => m.PostAlbum(newAlbum, out testFeedback)).Returns(newAlbum);
 
             albumService.TryPostAlbum(newAlbum, out testFeedback);
 
-            modelMock.Verify(m => m.TryPostAlbum(newAlbum, out testFeedback), Times.Once);
+            modelMock.Verify(m => m.PostAlbum(newAlbum, out testFeedback), Times.Once);
         }
     }
 }

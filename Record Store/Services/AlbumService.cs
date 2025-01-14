@@ -40,7 +40,7 @@ namespace Record_Store.Services
                 album.Subgenre = album.ParentGenre.ToString();
             }
 
-            return _model.TryPostAlbum(album, out feedback);
+            return _model.PostAlbum(album, out feedback);
         }
     }
 }

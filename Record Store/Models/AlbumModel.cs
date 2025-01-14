@@ -1,10 +1,12 @@
-﻿namespace Record_Store.Models
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+
+namespace Record_Store.Models
 {
     public interface IAlbumModel
     {
         List<Album> GetAllAlbums();
         Album? GetAlbumById(int id);
-        Album? TryPostAlbum(Album album, out string feedback);
+        Album? PostAlbum(Album album, out string feedback);
 
     }
     public class AlbumModel : IAlbumModel
@@ -26,7 +28,7 @@
             return _db.Albums.FirstOrDefault(a => a.Id == id);
         }
 
-        public Album? TryPostAlbum(Album album, out string feedback)
+        public Album? PostAlbum(Album album, out string feedback)
         {
             var allAlbums = GetAllAlbums();
 
@@ -48,6 +50,54 @@
                 feedback = ex.Message;
                 return null;
             }
+        }
+
+        public Album? UpdateAlbum(AlbumDTO albumUpdate, out string feedback)
+        {
+            var oldAlbum = GetAlbumById(albumUpdate.Id);
+
+            if (oldAlbum == null)
+            {
+                feedback = "Album not found.";
+                return null;
+            }
+
+            if (!String.IsNullOrEmpty(albumUpdate.Name) &&
+                albumUpdate.Name != oldAlbum.Name)
+            {
+                oldAlbum.Name = albumUpdate.Name;
+            }
+
+            if (!String.IsNullOrEmpty(albumUpdate.Artist) &&
+                albumUpdate.Artist != oldAlbum.Artist)
+            {
+                oldAlbum.Artist = albumUpdate.Artist;
+            }
+
+            if (!String.IsNullOrEmpty(albumUpdate.Subgenre) &&
+                albumUpdate.Subgenre != oldAlbum.Subgenre)
+            {
+                oldAlbum.Subgenre = albumUpdate.Subgenre;
+            }
+
+            if (albumUpdate.Year != null &&  albumUpdate.Year != oldAlbum.Year)
+            {
+                oldAlbum.Year = (int)albumUpdate.Year;
+            }
+
+            try
+            {
+                _db.Albums.Update(oldAlbum);
+                _db.SaveChanges();
+                feedback = "Success";
+                return oldAlbum;
+            }
+            catch (Exception ex)
+            {
+                feedback = ex.Message;
+                return null;
+            }
+
         }
     }
 }
