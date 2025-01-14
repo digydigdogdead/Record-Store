@@ -21,5 +21,15 @@ namespace Record_Store.Controllers
             if (result.Count > 1) return Ok(result);
             else return NoContent();
         }
+
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetAlbumById(int id)
+        {
+            var album = _albumService.GetAlbumById(id);
+            if (album == null) return NotFound();
+            else return Ok(album);
+        }
+            
     }
 }

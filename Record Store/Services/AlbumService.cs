@@ -5,6 +5,7 @@ namespace Record_Store.Services
     public interface IAlbumService
     {
         List<Album> GetAllAlbums();
+        Album? GetAlbumById(int id);
     }
     public class AlbumService : IAlbumService
     {

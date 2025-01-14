@@ -18,6 +18,7 @@ namespace RecordStoreTests
         private Mock<IAlbumService> serviceMock;
         private AlbumController controller;
         private List<Album> testAlbums;
+        private Album testAlbum;
         [SetUp]
         public void Setup()
         {
@@ -28,6 +29,7 @@ namespace RecordStoreTests
                 new Album { Id = 1, Artist = "Sleep Token", Name = "Take Me Back To Eden", Year = 2023 },
                 new Album { Id = 2, Artist = "Various Artists", Name = "Madagascar: Escape 2 Africa", Year = 2008 }
             };
+            testAlbum = new Album { Id = 1, Artist = "Sleep Token", Name = "Take Me Back To Eden", Year = 2023 };
         }
 
         [TearDown]
@@ -66,6 +68,35 @@ namespace RecordStoreTests
 
             var result = controller.GetAllAlbums();
 
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Test]
+        public void GetAlbumByIdInvokesServiceOnce()
+        {
+            serviceMock.Setup(s => s.GetAlbumById(1)).Returns(testAlbum);
+            controller.GetAlbumById(1);
+
+            serviceMock.Verify(s => s.GetAlbumById(1), Times.Once);
+        }
+
+        [Test]
+        public void GetAlbumByIdReturnsOk()
+        {
+            serviceMock.Setup(s => s.GetAlbumById(1)).Returns(testAlbum);
+            var expected = controller.Ok(testAlbum);
+
+            var result = controller.GetAlbumById(1);
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Test]
+        public void GetAlbumByIdReturnsNotFound()
+        {
+            serviceMock.Setup(s => s.GetAlbumById(40));
+            var expected = controller.NotFound();
+
+            var result = controller.GetAlbumById(40);
             result.Should().BeEquivalentTo(expected);
         }
     }
