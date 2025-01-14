@@ -3,6 +3,8 @@ using Record_Store.Services;
 
 namespace Record_Store.Controllers
 {
+    [ApiController]
+    [Route("/albums")]
     public class AlbumController : Controller
     {
         private IAlbumService _albumService;
@@ -12,9 +14,12 @@ namespace Record_Store.Controllers
             _albumService = albumService;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult GetAllAlbums()
         {
-            return View();
+            var result = _albumService.GetAllAlbums();
+            if (result.Count > 1) return Ok(result);
+            else return NoContent();
         }
     }
 }
