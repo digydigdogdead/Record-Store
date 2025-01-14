@@ -99,5 +99,58 @@ namespace RecordStoreTests
             var result = controller.GetAlbumById(40);
             result.Should().BeEquivalentTo(expected);
         }
+
+        [Test]
+        public void PostAlbumReturnsBadRequest()
+        {
+            string testFeedback = string.Empty;
+            Album newAlbum = new Album();
+
+            serviceMock.Setup(s => s.TryPostAlbum(newAlbum, out testFeedback));
+            var expected = controller.BadRequest();
+
+            var result = controller.PostAlbum(newAlbum);
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Test]
+        public void PostAlbumReturnsOk()
+        {
+            string testFeedback = string.Empty;
+            Album newAlbum = new Album
+            {
+                Id = 3,
+                Artist = "Lady Gaga",
+                Year = 2013,
+                ParentGenre = ParentGenre.POP,
+                Name = "ARTPOP"
+            };
+
+            serviceMock.Setup(s => s.TryPostAlbum(newAlbum, out testFeedback)).Returns(newAlbum);
+            var expected = controller.Ok(newAlbum);
+
+            var result = controller.PostAlbum(newAlbum);
+        }
+
+        [Test]
+        public void PostAlbumInvokesServiceOnce()
+        {
+            string testFeedback = string.Empty;
+            Album newAlbum = new Album
+            {
+                Id = 3,
+                Artist = "Lady Gaga",
+                Year = 2013,
+                ParentGenre = ParentGenre.POP,
+                Name = "ARTPOP"
+            };
+
+            serviceMock.Setup(s => s.TryPostAlbum(newAlbum, out testFeedback)).Returns(newAlbum);
+
+            controller.PostAlbum(newAlbum);
+
+            serviceMock.Verify(s => s.TryPostAlbum(newAlbum, out testFeedback), Times.Once);
+        }
     }
 }

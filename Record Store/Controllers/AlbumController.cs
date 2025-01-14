@@ -30,6 +30,15 @@ namespace Record_Store.Controllers
             if (album == null) return NotFound();
             else return Ok(album);
         }
+
+        [HttpPost]
+        public IActionResult PostAlbum(Album album)
+        {
+            var result = _albumService.TryPostAlbum(album, out string feedback);
+
+            if (result is null) return BadRequest(feedback);
+            return Ok(result);
+        }
             
     }
 }
