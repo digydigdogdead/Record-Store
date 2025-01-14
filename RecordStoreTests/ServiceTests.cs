@@ -16,6 +16,7 @@ namespace RecordStoreTests
         private Mock<IAlbumModel> modelMock;
         private AlbumService albumService;
         private List<Album> testAlbums;
+        private Album testAlbum;
 
         [SetUp]
         public void Setup()
@@ -27,10 +28,11 @@ namespace RecordStoreTests
                 new Album { Id = 1, Artist = "Sleep Token", Name = "Take Me Back To Eden", Year = 2023 },
                 new Album { Id = 2, Artist = "Various Artists", Name = "Madagascar: Escape 2 Africa", Year = 2008 }
             };
+            testAlbum = new Album { Id = 1, Artist = "Sleep Token", Name = "Take Me Back To Eden", Year = 2023 };
         }
 
         [Test]
-        public void GetAllAlbumsInvokesRepoOnce()
+        public void GetAllAlbumsInvokesModelOnce()
         {
             modelMock.Setup(m => m.GetAllAlbums());
             albumService.GetAllAlbums();
@@ -45,6 +47,25 @@ namespace RecordStoreTests
             var result = albumService.GetAllAlbums();
 
             result.Should().BeEquivalentTo(testAlbums);
+        }
+
+        [Test]
+        public void GetAlbumByIdInvokesModelOnce()
+        {
+            modelMock.Setup(m => m.GetAlbumById(1)).Returns(testAlbum);
+
+            albumService.GetAlbumById(1);
+
+            modelMock.Verify(m => m.GetAlbumById(1), Times.Once);
+        }
+
+        [Test]
+        public void GetAlbumByIdReturnsModelEquivalent()
+        {
+            modelMock.Setup(m => m.GetAlbumById(1)).Returns(testAlbum);
+            var result = albumService.GetAlbumById(1);
+
+            result.Should().BeEquivalentTo(testAlbum);
         }
     }
 }

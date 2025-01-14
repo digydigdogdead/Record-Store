@@ -18,5 +18,10 @@ namespace Record_Store.Services
         {
             return _model.GetAllAlbums();
         }
+
+        public Album? GetAlbumById(int id)
+        {
+            return _model.GetAlbumById(id);
+        }
     }
 }
