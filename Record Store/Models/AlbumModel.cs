@@ -2,6 +2,8 @@
 {
     public interface IAlbumModel
     {
+        List<Album> GetAllAlbums();
+        Album? GetAlbumById(int id);
 
     }
     public class AlbumModel : IAlbumModel
