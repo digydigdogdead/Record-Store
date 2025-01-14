@@ -5,6 +5,8 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Record Store", "Record Store\Record Store.csproj", "{80BA0F31-BD40-48E5-866F-A387B84AB418}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordStoreTests", "RecordStoreTests\RecordStoreTests.csproj", "{A58C030A-3A60-498C-B77D-AD63267B8D1B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{80BA0F31-BD40-48E5-866F-A387B84AB418}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{80BA0F31-BD40-48E5-866F-A387B84AB418}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{80BA0F31-BD40-48E5-866F-A387B84AB418}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A58C030A-3A60-498C-B77D-AD63267B8D1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A58C030A-3A60-498C-B77D-AD63267B8D1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A58C030A-3A60-498C-B77D-AD63267B8D1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A58C030A-3A60-498C-B77D-AD63267B8D1B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
