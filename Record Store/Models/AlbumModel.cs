@@ -4,6 +4,7 @@
     {
         List<Album> GetAllAlbums();
         Album? GetAlbumById(int id);
+        Album? TryPostAlbum(Album album, out string feedback);
 
     }
     public class AlbumModel : IAlbumModel
@@ -25,14 +26,14 @@
             return _db.Albums.FirstOrDefault(a => a.Id == id);
         }
 
-        public bool TryPostAlbum(Album album, out string feedback)
+        public Album? TryPostAlbum(Album album, out string feedback)
         {
             var allAlbums = GetAllAlbums();
 
             if (allAlbums.Any(a => a.Id == album.Id))
             {
                 feedback = "The supplied Id is not unique.";
-                return false;
+                return null;
             }
 
             try
@@ -40,12 +41,12 @@
                 _db.Albums.Add(album);
                 _db.SaveChanges();
                 feedback = "Success";
-                return true;
+                return album;
             }
             catch (Exception ex)
             {
                 feedback = ex.Message;
-                return false;
+                return null;
             }
         }
     }

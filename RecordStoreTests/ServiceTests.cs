@@ -67,5 +67,88 @@ namespace RecordStoreTests
 
             result.Should().BeEquivalentTo(testAlbum);
         }
+
+        [Test]
+        public void PostAlbumReturnsModelEquivalent()
+        {
+            string testFeedback = string.Empty;
+            Album newAlbum = new Album
+            {
+                Id = 3,
+                Artist = "Lady Gaga",
+                Year = 2013,
+                ParentGenre = ParentGenre.POP,
+                Name = "ARTPOP"
+            };
+            Album emptyAlbum = new Album();
+            
+            modelMock.Setup(m => m.TryPostAlbum(newAlbum, out testFeedback)).Returns(newAlbum);
+
+            var result = albumService.TryPostAlbum(newAlbum, out testFeedback);
+
+            result.Should().BeEquivalentTo(newAlbum);
+        }
+
+        [Test]
+        public void PostAlbumsReturnsEditedAlbumGenre() 
+        {
+            string testFeedback = string.Empty;
+            Album newAlbum = new Album
+            {
+                Id = 3,
+                Artist = "Lady Gaga",
+                Year = 2013,
+                ParentGenre = ParentGenre.POP,
+                Name = "ARTPOP"
+            };
+
+            Album expectedEditedAlbum = new Album
+            {
+                Id = 3,
+                Artist = "Lady Gaga",
+                Year = 2013,
+                ParentGenre = ParentGenre.POP,
+                Subgenre = "POP",
+                Name = "ARTPOP"
+            };
+            
+            modelMock.Setup(m => m.TryPostAlbum(newAlbum, out testFeedback)).Returns(expectedEditedAlbum);
+
+            var result = albumService.TryPostAlbum(newAlbum, out testFeedback);
+
+            result.Should().BeEquivalentTo(expectedEditedAlbum);
+        }
+
+        [Test]
+        public void PostAlbumReturnsFalseWithBadAlbum()
+        {
+            string testFeedback = string.Empty;
+            Album newAlbum = new Album();
+
+            var result = albumService.TryPostAlbum(newAlbum, out testFeedback);
+
+            result.Should().BeNull();
+        }
+
+        [Test]
+        public void PostAlbumInvokesModelOnce()
+        {
+            string testFeedback = string.Empty;
+            Album newAlbum = new Album
+            {
+                Id = 3,
+                Artist = "Lady Gaga",
+                Year = 2013,
+                ParentGenre = ParentGenre.POP,
+                Subgenre = "Hyperpop",
+                Name = "ARTPOP"
+            };
+
+            modelMock.Setup(m => m.TryPostAlbum(newAlbum, out testFeedback)).Returns(newAlbum);
+
+            albumService.TryPostAlbum(newAlbum, out testFeedback);
+
+            modelMock.Verify(m => m.TryPostAlbum(newAlbum, out testFeedback), Times.Once);
+        }
     }
 }
