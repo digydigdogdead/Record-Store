@@ -25,10 +25,10 @@ namespace RecordStoreTests
             albumService = new AlbumService(modelMock.Object);
             testAlbums = new List<Album>
             {
-                new Album { Id = 1, Artist = "Sleep Token", Name = "Take Me Back To Eden", Year = 2023 },
-                new Album { Id = 2, Artist = "Various Artists", Name = "Madagascar: Escape 2 Africa", Year = 2008 }
+                new Album { Id = 1, Artist = "Sleep Token", Name = "Take Me Back To Eden", Year = 2023, ParentGenre = ParentGenre.METAL },
+                new Album { Id = 2, Artist = "Various Artists", Name = "Madagascar: Escape 2 Africa", Year = 2008, ParentGenre = ParentGenre.CLASSICAL }
             };
-            testAlbum = new Album { Id = 1, Artist = "Sleep Token", Name = "Take Me Back To Eden", Year = 2023 };
+            testAlbum = new Album { Id = 1, Artist = "Sleep Token", Name = "Take Me Back To Eden", Year = 2023, ParentGenre = ParentGenre.METAL };
         }
 
         [Test]

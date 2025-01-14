@@ -60,7 +60,8 @@ namespace Record_Store
                 Id = 1,
                 Artist = "Sleep Token",
                 Name = "Take Me Back To Eden",
-                Year = 2023
+                Year = 2023,
+                ParentGenre = ParentGenre.METAL
             };
 
             var madagascar2 = new Album
@@ -68,7 +69,8 @@ namespace Record_Store
                 Id = 2,
                 Artist = "Various Artists",
                 Name = "Madagascar: Escape 2 Africa",
-                Year = 2008
+                Year = 2008,
+                ParentGenre = ParentGenre.CLASSICAL
             };
 
             db.Albums.Add(takeMeBackToEden);
