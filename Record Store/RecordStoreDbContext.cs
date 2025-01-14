@@ -7,5 +7,6 @@ namespace Record_Store
         public DbSet<Album> Albums { get; set; }
 
         public RecordStoreDbContext(DbContextOptions<RecordStoreDbContext> options) : base(options) { }
+
     }
 }
