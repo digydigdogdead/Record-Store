@@ -1,4 +1,4 @@
-﻿namespace Record_Store.Data_Classes
+﻿namespace Record_Store
 {
     public class Album
     {
