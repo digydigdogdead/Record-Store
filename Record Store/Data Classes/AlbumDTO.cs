@@ -8,5 +8,6 @@
         public int? Year { get; set; }
         public ParentGenre? ParentGenre { get; set; }
         public string? Subgenre { get; set; }
+        public int? Stock {  get; set; }
     }
 }

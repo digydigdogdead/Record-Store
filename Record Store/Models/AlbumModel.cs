@@ -92,9 +92,14 @@ namespace Record_Store.Models
                 oldAlbum.Subgenre = albumUpdate.Subgenre;
             }
 
-            if (albumUpdate.Year != null &&  albumUpdate.Year != oldAlbum.Year)
+            if (albumUpdate.Year != null && albumUpdate.Year != oldAlbum.Year)
             {
                 oldAlbum.Year = (int)albumUpdate.Year;
+            }
+
+            if (albumUpdate.Stock != null && albumUpdate.Stock != oldAlbum.Stock)
+            {
+                oldAlbum.Stock = (int)albumUpdate.Stock;
             }
 
             try
