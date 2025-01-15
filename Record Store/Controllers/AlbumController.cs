@@ -34,11 +34,26 @@ namespace Record_Store.Controllers
         [HttpPost]
         public IActionResult PostAlbum(Album album)
         {
-            var result = _albumService.TryPostAlbum(album, out string feedback);
+            var result = _albumService.PostAlbum(album, out string feedback);
 
             if (result is null) return BadRequest(feedback);
             return Ok(result);
         }
-            
+
+        [HttpPatch]
+        [Route("{id}")]
+        public IActionResult PatchAlbum(int id, AlbumDTO albumDTO)
+        {
+            albumDTO.Id = id;
+
+            var serviceResult = _albumService.UpdateAlbum(albumDTO, out string feedback);
+
+            if (serviceResult is null && feedback == "Album not found.")
+            {
+                return NotFound();
+            }
+            else if (serviceResult is null) return BadRequest(feedback);
+            else return Ok(serviceResult);
+        }
     }
 }

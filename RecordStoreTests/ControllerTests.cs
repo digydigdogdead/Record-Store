@@ -10,6 +10,7 @@ using Record_Store;
 using Record_Store.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using FluentAssertions;
+using System.Runtime.Intrinsics.X86;
 
 namespace RecordStoreTests
 {
@@ -106,7 +107,7 @@ namespace RecordStoreTests
             string testFeedback = string.Empty;
             Album newAlbum = new Album();
 
-            serviceMock.Setup(s => s.TryPostAlbum(newAlbum, out testFeedback));
+            serviceMock.Setup(s => s.PostAlbum(newAlbum, out testFeedback));
             var expected = controller.BadRequest();
 
             var result = controller.PostAlbum(newAlbum);
@@ -127,7 +128,7 @@ namespace RecordStoreTests
                 Name = "ARTPOP"
             };
 
-            serviceMock.Setup(s => s.TryPostAlbum(newAlbum, out testFeedback)).Returns(newAlbum);
+            serviceMock.Setup(s => s.PostAlbum(newAlbum, out testFeedback)).Returns(newAlbum);
             var expected = controller.Ok(newAlbum);
 
             var result = controller.PostAlbum(newAlbum);
@@ -146,11 +147,76 @@ namespace RecordStoreTests
                 Name = "ARTPOP"
             };
 
-            serviceMock.Setup(s => s.TryPostAlbum(newAlbum, out testFeedback)).Returns(newAlbum);
+            serviceMock.Setup(s => s.PostAlbum(newAlbum, out testFeedback)).Returns(newAlbum);
 
             controller.PostAlbum(newAlbum);
 
-            serviceMock.Verify(s => s.TryPostAlbum(newAlbum, out testFeedback), Times.Once);
+            serviceMock.Verify(s => s.PostAlbum(newAlbum, out testFeedback), Times.Once);
+        }
+
+        [Test]
+        public void PatchAlbumInvokesServiceOnce()
+        {
+            AlbumDTO testDTO = new AlbumDTO { Id = 1, Subgenre = "Pop-Metal" };
+            string testFeedback = string.Empty;
+
+            serviceMock.Setup(s => s.UpdateAlbum(testDTO, out testFeedback));
+
+            controller.PatchAlbum(1, testDTO);
+
+            serviceMock.Verify(s => s.UpdateAlbum(testDTO, out testFeedback), Times.Once);
+        }
+
+        [Test]
+        public void PatchAlbumReturnsNotFound()
+        {
+            AlbumDTO testDTO = new AlbumDTO { Id = 1000, Subgenre = "Pop-Metal" };
+            string testFeedback = "Album not found.";
+
+            var expected = controller.NotFound();
+            serviceMock.Setup(s => s.UpdateAlbum(testDTO, out testFeedback));
+            
+            var result = controller.PatchAlbum(1, testDTO);
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Test]
+        public void PatchAlbumReturnsOkWithUpdatedAlbum()
+        {
+            AlbumDTO testDTO = new AlbumDTO { Id = 1, Subgenre = "Pop-Metal" };
+            Album updatedAlbum = new Album
+            {
+                Id = 1,
+                Artist = "Sleep Token",
+                Name = "Take Me Back To Eden",
+                Year = 2023,
+                ParentGenre = ParentGenre.METAL,
+                Subgenre = "Pop-Metal"
+            };
+            string testFeedback = string.Empty;
+
+            serviceMock.Setup(s => s.UpdateAlbum(testDTO, out testFeedback)).Returns(updatedAlbum);
+            var expected = controller.Ok(updatedAlbum);
+
+            var result = controller.PatchAlbum(1, testDTO);
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Test]
+        public void PatchAlbumReturnsBadRequest()
+        {
+            AlbumDTO testDTO = new AlbumDTO { Id = 1, Subgenre = "Pop-Metal" };
+            string testFeedback = "jdfisj";
+
+            serviceMock.Setup(s => s.UpdateAlbum(testDTO, out testFeedback));
+            var expected = controller.BadRequest(testFeedback);
+
+            var result = controller.PatchAlbum(1, testDTO);
+
+            result.Should().BeEquivalentTo(expected);
+
         }
     }
 }

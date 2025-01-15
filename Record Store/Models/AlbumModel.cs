@@ -55,7 +55,7 @@ namespace Record_Store.Models
 
         public Album? UpdateAlbum(AlbumDTO albumUpdate, out string feedback)
         {
-            var oldAlbum = GetAlbumById(albumUpdate.Id);
+            var oldAlbum = GetAlbumById((int)albumUpdate.Id);
 
             if (oldAlbum == null)
             {
