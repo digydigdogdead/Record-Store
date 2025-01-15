@@ -10,6 +10,7 @@ namespace Record_Store.Models
         Album? UpdateAlbum(AlbumDTO albumUpdate, out string feedback);
         bool TryDeleteAlbum(int albumId, out string feedback);
         List<Album> GetAlbumsByArtist(string artist);
+        List<Album> GetAllAlbumsInStock();
 
     }
     public class AlbumModel : IAlbumModel
@@ -38,6 +39,13 @@ namespace Record_Store.Models
         public Album? GetAlbumById(int id)
         {
             return _db.Albums.FirstOrDefault(a => a.Id == id);
+        }
+
+        public List<Album> GetAllAlbumsInStock()
+        {
+            return (from album in _db.Albums
+                    where album.Stock > 0
+                    select album).ToList();
         }
 
         public Album? PostAlbum(Album album, out string feedback)
@@ -116,7 +124,6 @@ namespace Record_Store.Models
             }
 
         }
-
         public bool TryDeleteAlbum(int albumId, out string feedback)
         {
             Album? albumToDelete = GetAlbumById(albumId);
