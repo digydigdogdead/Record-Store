@@ -69,5 +69,16 @@ namespace Record_Store.Controllers
             else if (!result) return BadRequest(feedback);
             else return NoContent();
         }
+
+        [HttpGet]
+        [Route("/artist/{artist}")]
+        public IActionResult GetAlbumsByArtist(string artist)
+        {
+            var result = _albumService.GetAlbumsByArtist(artist);
+
+            if (result.Count == 0) return NotFound();
+
+            return Ok(result);
+        }
     }
 }

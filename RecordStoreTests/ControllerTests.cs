@@ -271,5 +271,38 @@ namespace RecordStoreTests
             result.Should().BeEquivalentTo(expected);
 
         }
+
+        [Test]
+        public void GetAlbumsByArtistReturnsNotFound()
+        {
+            serviceMock.Setup(s => s.GetAlbumsByArtist("Queen")).Returns(new List<Album>());
+            var expected = controller.NotFound();
+
+            var result = controller.GetAlbumsByArtist("Queen");
+
+            result.Should().BeEquivalentTo(expected);
+
+        }
+
+        [Test]
+        public void GetAllAlbumsByArtistReturnsOk()
+        {
+            serviceMock.Setup(s => s.GetAlbumsByArtist("Queen")).Returns(testAlbums);
+            var expected = controller.Ok(testAlbums);
+
+            var result = controller.GetAlbumsByArtist("Queen");
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Test]
+        public void GetAllAlbumsByArtistInvokesServiceOnce()
+        {
+            serviceMock.Setup(s => s.GetAlbumsByArtist("Queen")).Returns(new List<Album>());
+
+            controller.GetAlbumsByArtist("Queen");
+
+            serviceMock.Verify(s => s.GetAlbumsByArtist("Queen"));
+        }
     }
 }
