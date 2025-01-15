@@ -8,6 +8,7 @@ namespace Record_Store.Services
         Album? GetAlbumById(int id);
         Album? PostAlbum(Album album, out string feedback);
         Album? UpdateAlbum(AlbumDTO album, out string feedback);
+        bool TryDeleteAlbum(int id, out string feedback);
     }
     public class AlbumService : IAlbumService
     {
@@ -47,6 +48,11 @@ namespace Record_Store.Services
         public Album? UpdateAlbum(AlbumDTO album, out string feedback)
         {
             return _model.UpdateAlbum(album, out feedback);
+        }
+
+        public bool TryDeleteAlbum(int id, out string feedback)
+        {
+            return _model.TryDeleteAlbum(id, out feedback);
         }
     }
 }

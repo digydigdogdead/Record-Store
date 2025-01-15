@@ -208,5 +208,28 @@ namespace RecordStoreTests
 
             result.Should().BeNull();
         }
+
+        [Test]
+        public void DeleteAlbumInvokesModelOnce()
+        {
+            string testFeedback = string.Empty;
+            modelMock.Setup(m => m.TryDeleteAlbum(1, out testFeedback)).Returns(true);
+
+            albumService.TryDeleteAlbum(1, out testFeedback);
+
+            modelMock.Verify(m => m.TryDeleteAlbum(1, out testFeedback), Times.Once);
+
+        }
+
+        [Test]
+        public void DeleteAlbumReturnsModelEquivalent()
+        {
+            string testFeedback = string.Empty;
+            modelMock.Setup(m => m.TryDeleteAlbum(1, out testFeedback)).Returns(true);
+
+            var result = albumService.TryDeleteAlbum(1, out testFeedback);
+
+            result.Should().BeTrue();
+        }
     }
 }
