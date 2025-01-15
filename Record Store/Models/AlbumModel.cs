@@ -8,6 +8,7 @@ namespace Record_Store.Models
         Album? GetAlbumById(int id);
         Album? PostAlbum(Album album, out string feedback);
         Album? UpdateAlbum(AlbumDTO albumUpdate, out string feedback);
+        bool TryDeleteAlbum(int albumId, out string feedback);
 
     }
     public class AlbumModel : IAlbumModel
@@ -99,6 +100,30 @@ namespace Record_Store.Models
                 return null;
             }
 
+        }
+
+        public bool TryDeleteAlbum(int albumId, out string feedback)
+        {
+            Album? albumToDelete = GetAlbumById(albumId);
+
+            if (albumToDelete == null)
+            {
+                feedback = "Album not found.";
+                return false;
+            }
+
+            try
+            {
+                _db.Albums.Remove(albumToDelete);
+                _db.SaveChanges();
+                feedback = "Success";
+                return true;
+            }
+            catch (Exception ex)
+            {
+                feedback = ex.Message;
+                return false;
+            }
         }
     }
 }
