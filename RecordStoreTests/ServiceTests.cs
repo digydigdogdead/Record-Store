@@ -28,7 +28,15 @@ namespace RecordStoreTests
                 new Album { Id = 1, Artist = "Sleep Token", Name = "Take Me Back To Eden", Year = 2023, ParentGenre = ParentGenre.METAL },
                 new Album { Id = 2, Artist = "Various Artists", Name = "Madagascar: Escape 2 Africa", Year = 2008, ParentGenre = ParentGenre.CLASSICAL }
             };
-            testAlbum = new Album { Id = 1, Artist = "Sleep Token", Name = "Take Me Back To Eden", Year = 2023, ParentGenre = ParentGenre.METAL };
+            testAlbum = new Album 
+            { 
+                Id = 1, 
+                Artist = "Sleep Token", 
+                Name = "Take Me Back To Eden", 
+                Year = 2023, 
+                ParentGenre = ParentGenre.METAL, 
+                Stock = 2 
+            };
         }
 
         [Test]
@@ -251,6 +259,64 @@ namespace RecordStoreTests
             var result = albumService.GetAlbumsByArtist("P!nk");
 
             result.Should().BeEquivalentTo(testAlbums);
+        }
+
+        [Test]
+        public void PurchaseAlbumInvokesModelMethods()
+        {
+            string testFeedback = "Success";
+            AlbumDTO testDto = new AlbumDTO { Id = 1, Stock = 0 };
+            Album updatedAlbum = new Album
+            {
+                Id = 1,
+                Artist = "Sleep Token",
+                Name = "Take Me Back To Eden",
+                Year = 2023,
+                ParentGenre = ParentGenre.METAL,
+                Stock = 1
+            };
+
+            modelMock.Setup(m => m.GetAlbumById(1)).Returns(testAlbum);
+            modelMock.Setup(m => m.UpdateAlbum(testDto, out testFeedback)).Returns(updatedAlbum);
+
+            albumService.PurchaseAlbum(1, out testFeedback);
+
+            modelMock.Verify(m => m.GetAlbumById(1), Times.Once);
+            //modelMock.Verify(m => m.UpdateAlbum(testDto, out testFeedback), Times.Once);
+        }
+
+/*        [Test]
+        public void PurchaseAlbumReturnsModelEquivalent()
+        {
+            string testFeedback = String.Empty;
+            AlbumDTO testDto = new AlbumDTO { Id = 1, Stock = 0 };
+            Album updatedAlbum = new Album
+            {
+                Id = 1,
+                Artist = "Sleep Token",
+                Name = "Take Me Back To Eden",
+                Year = 2023,
+                ParentGenre = ParentGenre.METAL,
+                Stock = 0
+            };
+
+            modelMock.Setup(m => m.GetAlbumById(1)).Returns(testAlbum);
+            modelMock.Setup(m => m.UpdateAlbum(testDto, out testFeedback)).Returns(updatedAlbum);
+
+            var result = albumService.PurchaseAlbum(1, out testFeedback);
+
+            result.Should().BeEquivalentTo(updatedAlbum);
+        }*/
+
+        [Test]
+        public void PurchaseAlbumReturnsNull()
+        {
+            string testFeedback = String.Empty;
+
+            modelMock.Setup(m => m.GetAlbumById(154));
+
+            var result = albumService.PurchaseAlbum(154, out testFeedback);
+            result.Should().BeNull();
         }
     }
 

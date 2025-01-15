@@ -10,6 +10,7 @@ namespace Record_Store.Services
         Album? UpdateAlbum(AlbumDTO album, out string feedback);
         bool TryDeleteAlbum(int id, out string feedback);
         List<Album> GetAlbumsByArtist(string artist);
+        Album? PurchaseAlbum(int id, out string feedback);
     }
     public class AlbumService : IAlbumService
     {
@@ -59,6 +60,32 @@ namespace Record_Store.Services
         public List<Album> GetAlbumsByArtist(string artist)
         {
             return _model.GetAlbumsByArtist(artist);
+        }
+
+        public Album? PurchaseAlbum(int id, out string feedback)
+        {
+            var albumToPurchase = _model.GetAlbumById(id);
+
+            if (albumToPurchase == null)
+            {
+                feedback = "Album not found.";
+                return null;
+            }
+
+            if (albumToPurchase.Stock < 1)
+            {
+                feedback = "Not enough stock.";
+                return null;
+            }
+            else
+            {
+                AlbumDTO purchaseUpdate = new AlbumDTO
+                {
+                    Id = albumToPurchase.Id,
+                    Stock = albumToPurchase.Stock - 1
+                };
+                return _model.UpdateAlbum(purchaseUpdate, out feedback);
+            }
         }
     }
 }
