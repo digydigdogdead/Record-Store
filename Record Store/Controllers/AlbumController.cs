@@ -80,5 +80,19 @@ namespace Record_Store.Controllers
 
             return Ok(result);
         }
+
+        [HttpPatch]
+        [Route("buy/{id}")]
+        public IActionResult PurchaseAlbum(int id)
+        {
+            var result = _albumService.PurchaseAlbum(id, out string feedback);
+
+            if (result is null && feedback == "Album not found.")
+            {
+                return NotFound();
+            }
+            else if (result is null) return BadRequest(feedback);
+            else return Ok(result);
+        }
     }
 }
