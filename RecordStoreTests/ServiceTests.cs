@@ -84,7 +84,7 @@ namespace RecordStoreTests
             
             modelMock.Setup(m => m.PostAlbum(newAlbum, out testFeedback)).Returns(newAlbum);
 
-            var result = albumService.TryPostAlbum(newAlbum, out testFeedback);
+            var result = albumService.PostAlbum(newAlbum, out testFeedback);
 
             result.Should().BeEquivalentTo(newAlbum);
         }
@@ -114,7 +114,7 @@ namespace RecordStoreTests
             
             modelMock.Setup(m => m.PostAlbum(newAlbum, out testFeedback)).Returns(expectedEditedAlbum);
 
-            var result = albumService.TryPostAlbum(newAlbum, out testFeedback);
+            var result = albumService.PostAlbum(newAlbum, out testFeedback);
 
             result.Should().BeEquivalentTo(expectedEditedAlbum);
         }
@@ -125,7 +125,7 @@ namespace RecordStoreTests
             string testFeedback = string.Empty;
             Album newAlbum = new Album();
 
-            var result = albumService.TryPostAlbum(newAlbum, out testFeedback);
+            var result = albumService.PostAlbum(newAlbum, out testFeedback);
 
             result.Should().BeNull();
         }
@@ -146,9 +146,67 @@ namespace RecordStoreTests
 
             modelMock.Setup(m => m.PostAlbum(newAlbum, out testFeedback)).Returns(newAlbum);
 
-            albumService.TryPostAlbum(newAlbum, out testFeedback);
+            albumService.PostAlbum(newAlbum, out testFeedback);
 
             modelMock.Verify(m => m.PostAlbum(newAlbum, out testFeedback), Times.Once);
+        }
+
+        [Test]
+        public void UpdateAlbumInvokesModelOnce()
+        {
+            AlbumDTO updateTestData = new AlbumDTO { Id = 3, Artist = "Lady GaGa" };
+            string testFeedback = string.Empty;
+            Album updatedAlbum = new Album
+            {
+                Id = 3,
+                Artist = "Lady GaGa",
+                Year = 2013,
+                ParentGenre = ParentGenre.POP,
+                Subgenre = "Hyperpop",
+                Name = "ARTPOP"
+            };
+
+            modelMock.Setup(m => m.UpdateAlbum(updateTestData, out testFeedback)).Returns(updatedAlbum);
+
+            albumService.UpdateAlbum(updateTestData, out testFeedback);
+
+            modelMock.Verify(m => m.UpdateAlbum(updateTestData, out testFeedback), Times.Once);
+        }
+
+        [Test]
+        public void UpdateAlbumReturnsModelEquivalent()
+        {
+            AlbumDTO updateTestData = new AlbumDTO { Id = 3, Artist = "Lady GaGa" };
+            string testFeedback = string.Empty;
+            Album updatedAlbum = new Album
+            {
+                Id = 3,
+                Artist = "Lady GaGa",
+                Year = 2013,
+                ParentGenre = ParentGenre.POP,
+                Subgenre = "Hyperpop",
+                Name = "ARTPOP"
+            };
+
+            modelMock.Setup(m => m.UpdateAlbum(updateTestData, out testFeedback)).Returns(updatedAlbum);
+
+            var result = albumService.UpdateAlbum(updateTestData, out testFeedback);
+
+            result.Should().BeEquivalentTo(updatedAlbum);
+        }
+
+        [Test]
+        public void UpdateAlbumReturnsNull()
+        {
+            AlbumDTO updateTestData = new AlbumDTO { Id = 549, Artist = "Lady GaGa" };
+            string testFeedback = string.Empty;
+            
+
+            modelMock.Setup(m => m.UpdateAlbum(updateTestData, out testFeedback));
+
+            var result = albumService.UpdateAlbum(updateTestData, out testFeedback);
+
+            result.Should().BeNull();
         }
     }
 }

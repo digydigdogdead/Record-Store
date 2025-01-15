@@ -7,6 +7,7 @@ namespace Record_Store.Models
         List<Album> GetAllAlbums();
         Album? GetAlbumById(int id);
         Album? PostAlbum(Album album, out string feedback);
+        Album? UpdateAlbum(AlbumDTO albumUpdate, out string feedback);
 
     }
     public class AlbumModel : IAlbumModel

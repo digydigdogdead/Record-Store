@@ -6,7 +6,8 @@ namespace Record_Store.Services
     {
         List<Album> GetAllAlbums();
         Album? GetAlbumById(int id);
-        Album? TryPostAlbum(Album album, out string feedback);
+        Album? PostAlbum(Album album, out string feedback);
+        Album? UpdateAlbum(AlbumDTO album, out string feedback);
     }
     public class AlbumService : IAlbumService
     {
@@ -26,7 +27,7 @@ namespace Record_Store.Services
             return _model.GetAlbumById(id);
         }
 
-        public Album? TryPostAlbum(Album album, out string feedback)
+        public Album? PostAlbum(Album album, out string feedback)
         {
             if (String.IsNullOrEmpty(album.Artist)
                 || String.IsNullOrEmpty(album.Name))
@@ -41,6 +42,11 @@ namespace Record_Store.Services
             }
 
             return _model.PostAlbum(album, out feedback);
+        }
+
+        public Album? UpdateAlbum(AlbumDTO album, out string feedback)
+        {
+            return _model.UpdateAlbum(album, out feedback);
         }
     }
 }
