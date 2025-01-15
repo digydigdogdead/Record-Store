@@ -218,5 +218,58 @@ namespace RecordStoreTests
             result.Should().BeEquivalentTo(expected);
 
         }
+
+        [Test]
+        public void DeleteAlbumInvokesServiceOnce()
+        {
+            string testFeedback = string.Empty;
+
+            serviceMock.Setup(s => s.TryDeleteAlbum(1, out testFeedback)).Returns(false);
+
+            controller.DeleteAlbum(1);
+
+            serviceMock.Verify(s => s.TryDeleteAlbum(1, out testFeedback), Times.Once);
+        }
+
+        [Test]
+        public void DeleteAlbumReturnsBadRequest() 
+        {
+            string testFeedback = string.Empty;
+
+            serviceMock.Setup(s => s.TryDeleteAlbum(1, out testFeedback)).Returns(false);
+            var expected = controller.BadRequest(testFeedback);
+
+            var result = controller.DeleteAlbum(1);
+
+            result.Should().BeEquivalentTo(expected);
+
+        }
+
+        [Test]
+        public void DeleteAlbumReturnsNotFound()
+        {
+            string testFeedback = "Album not found.";
+            
+            serviceMock.Setup(s => s.TryDeleteAlbum(1, out testFeedback)).Returns(false);
+            var expected = controller.NotFound();
+
+            var result = controller.DeleteAlbum(1);
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Test]
+        public void DeleteAlbumReturnsNoContent()
+        {
+            string testFeedback = "Album not found.";
+
+            serviceMock.Setup(s => s.TryDeleteAlbum(1, out testFeedback)).Returns(true);
+            var expected = controller.NoContent();
+
+            var result = controller.DeleteAlbum(1);
+
+            result.Should().BeEquivalentTo(expected);
+
+        }
     }
 }

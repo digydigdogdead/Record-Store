@@ -55,5 +55,19 @@ namespace Record_Store.Controllers
             else if (serviceResult is null) return BadRequest(feedback);
             else return Ok(serviceResult);
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult DeleteAlbum(int id)
+        {
+            bool result = _albumService.TryDeleteAlbum(id, out string feedback);
+
+            if (!result && feedback == "Album not found.")
+            {
+                return NotFound();
+            }
+            else if (!result) return BadRequest(feedback);
+            else return NoContent();
+        }
     }
 }
