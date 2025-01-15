@@ -31,7 +31,7 @@ namespace Record_Store.Models
             var allAlbums = GetAllAlbums();
 
             return (from album in allAlbums
-                    where album.Artist == artist
+                    where album.Artist.ToUpper() == artist.ToUpper()
                     select album).ToList(); 
         }
 
