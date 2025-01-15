@@ -231,5 +231,27 @@ namespace RecordStoreTests
 
             result.Should().BeTrue();
         }
+
+        [Test]
+        public void GetAlbumsByArtistInvokesModelOnce()
+        {
+            modelMock.Setup(m => m.GetAlbumsByArtist("P!nk")).Returns(new List<Album>());
+
+            albumService.GetAlbumsByArtist("P!nk");
+
+            modelMock.Verify(m => m.GetAlbumsByArtist("P!nk"));
+        }
+
+        [Test]
+        public void GetAlbumsByArtistReturnsModelEquivalent()
+        {
+            
+            modelMock.Setup(m => m.GetAlbumsByArtist("P!nk")).Returns(testAlbums);
+
+            var result = albumService.GetAlbumsByArtist("P!nk");
+
+            result.Should().BeEquivalentTo(testAlbums);
+        }
     }
+
 }
