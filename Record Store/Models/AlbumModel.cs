@@ -25,6 +25,15 @@ namespace Record_Store.Models
             return _db.Albums.ToList();
         }
 
+        public List<Album> GetAlbumsByArtist(string artist)
+        {
+            var allAlbums = GetAllAlbums();
+
+            return (from album in allAlbums
+                    where album.Artist == artist
+                    select album).ToList(); 
+        }
+
         public Album? GetAlbumById(int id)
         {
             return _db.Albums.FirstOrDefault(a => a.Id == id);
