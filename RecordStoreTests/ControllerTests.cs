@@ -304,5 +304,55 @@ namespace RecordStoreTests
 
             serviceMock.Verify(s => s.GetAlbumsByArtist("Queen"));
         }
+
+        [Test]
+        public void PurchaseAlbumInvokesServiceOnce()
+        {
+            string testFeedback = "";
+            serviceMock.Setup(s => s.PurchaseAlbum(1, out testFeedback)).Returns(testAlbum);
+
+            controller.PurchaseAlbum(1);
+
+            serviceMock.Verify(s => s.PurchaseAlbum(1, out testFeedback));
+        }
+
+        [Test]
+        public void PurchaseAlbumReturnsOk()
+        {
+            string testFeedback = "";
+            serviceMock.Setup(s => s.PurchaseAlbum(1, out testFeedback)).Returns(testAlbum);
+
+            var expected = controller.Ok(testAlbum);
+
+            var result = controller.PurchaseAlbum(1);
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Test]
+        public void PurchaseAlbumReturnsNotFound()
+        {
+            string testFeedback = "Album not found.";
+            serviceMock.Setup(s => s.PurchaseAlbum(1233, out testFeedback));
+
+            var expected = controller.NotFound();
+
+            var result = controller.PurchaseAlbum(1233);
+
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [Test]
+        public void PurchaseAlbumReturnsBadRequest()
+        {
+            string testFeedback = "Alwef.";
+            serviceMock.Setup(s => s.PurchaseAlbum(1, out testFeedback));
+
+            var expected = controller.BadRequest();
+
+            var result = controller.PurchaseAlbum(1233);
+
+            result.Should().BeEquivalentTo(expected);
+        }
     }
 }
