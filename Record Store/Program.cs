@@ -1,6 +1,7 @@
 
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Record_Store.Models;
 using Record_Store.Services;
 using System;
@@ -22,6 +23,11 @@ namespace Record_Store
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddHealthChecks()
+                .AddSqlite(
+                connectionString: builder.Configuration.GetConnectionString("Connection"),
+                name: "Database connection health check",
+                failureStatus: HealthStatus.Degraded); ;
             builder.Services.AddSwaggerGen();
             builder.Services.AddScoped<IAlbumModel, AlbumModel>();
             builder.Services.AddScoped<IAlbumService, AlbumService>();
@@ -40,6 +46,7 @@ namespace Record_Store
 
             app.UseAuthorization();
 
+            app.MapHealthChecks("/health");
 
             app.MapControllers();
 
