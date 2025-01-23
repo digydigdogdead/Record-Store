@@ -16,4 +16,8 @@
     <Folder Include="Pages\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Record Store\Record Store.csproj" />
+  </ItemGroup>
+
 </Project>

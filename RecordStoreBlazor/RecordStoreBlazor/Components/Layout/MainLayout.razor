@@ -1,22 +1,26 @@
 ﻿@using RecordStoreBlazor.Components.Pages;
 @inherits LayoutComponentBase
 
-<header>
-    <h1>Legally Acquired Music</h1>
-    <h2>Where you can buy music that we bought for slightly more than we bought it for so that we can make money and continue to do this.</h2>
+<header class="hero is-primary">
+    <div class="hero-body">
+        <h1 class="title">Legally Acquired Music</h1>
+        <h2 class="subtitle">Where you can buy music that we bought for slightly more than we bought it for so that we can make money and continue to do this.</h2>
+    </div>
     <NavMenu></NavMenu>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
 </header>
 <div class="page">
 
     <main>
-        <article class="content px-4">
+        <article class="has-background-primary-invert">
             @Body
         </article>
     </main>
 </div>
 
-<footer>
-    <div class="justify-content-evenly">
+<footer class="footer">
+    <div class="content has-text-centered">
         <p>Carlyle Laurent</p>
         <p>2025</p>
     </div>
