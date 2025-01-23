@@ -1,0 +1,13 @@
+﻿@using Record_Store;
+
+<div class="columns">
+	@foreach (Album album in Albums)
+	{
+		<RecordSummary Record="album"></RecordSummary>
+	}
+</div>
+
+@code {
+	[Parameter]
+	public List<Album> Albums { get; set; }
+}

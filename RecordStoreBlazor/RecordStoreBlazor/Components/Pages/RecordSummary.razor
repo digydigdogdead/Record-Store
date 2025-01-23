@@ -1,0 +1,25 @@
+﻿@using Record_Store;
+
+<div class="column is-one-third">
+	<div class="box m-2">
+		<h3 class="is-size-3 has-text-centered has-text-weight-semibold">@Record.Name</h3>
+		<h4 class="is-size-4 has-text-centered">@Record.Artist</h4>
+		<div class="has-items-justified has-text-centered">
+			<p>@Record.Subgenre</p>
+			<p>@Record.Year</p>
+		</div>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public Album Record { get; set; } = new Album
+		{
+			Name = "Take Me Back To Eden",
+			Artist = "Sleep Token",
+			Id = 1,
+			ParentGenre = ParentGenre.METAL,
+			Subgenre = "Alternative Metal",
+			Year = 2023
+		};
+}

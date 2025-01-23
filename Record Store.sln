@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Record Store", "Record Stor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordStoreTests", "RecordStoreTests\RecordStoreTests.csproj", "{A58C030A-3A60-498C-B77D-AD63267B8D1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordStoreBlazor", "RecordStoreBlazor\RecordStoreBlazor\RecordStoreBlazor.csproj", "{BD55883E-DBF8-486F-BBDB-7CF748E70A60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordStoreBlazor", "RecordStoreBlazor\RecordStoreBlazor\RecordStoreBlazor.csproj", "{BD55883E-DBF8-486F-BBDB-7CF748E70A60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordStoreBlazor.Client", "RecordStoreBlazor\RecordStoreBlazor.Client\RecordStoreBlazor.Client.csproj", "{37609C22-2951-49AC-AD96-A0336884F83E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordStoreBlazor.Client", "RecordStoreBlazor\RecordStoreBlazor.Client\RecordStoreBlazor.Client.csproj", "{37609C22-2951-49AC-AD96-A0336884F83E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,7 +1,15 @@
-﻿@page "/"
+﻿@using Record_Store;
+@page "/"
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<RecordsSummaryList Albums="albums"></RecordsSummaryList>
 
-Welcome to your new app.
+
+@code {
+	List<Album> albums = new List<Album>
+	{
+		new Album { Id = 1, Artist = "Sleep Token", Name = "Take Me Back To Eden", Year = 2023, ParentGenre = ParentGenre.METAL, Subgenre = "Alternative Metal" },
+		new Album { Id = 2, Artist = "Various Artists", Name = "Madagascar: Escape 2 Africa", Year = 2008, ParentGenre = ParentGenre.CLASSICAL, Subgenre = "Soundtrack" }
+	};
+}
