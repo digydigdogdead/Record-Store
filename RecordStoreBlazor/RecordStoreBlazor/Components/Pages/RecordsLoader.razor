@@ -1,0 +1,24 @@
+﻿@using Record_Store;
+
+@if (albums != null && albums.Count != 0)
+{
+	<div><RecordsSummaryList Albums="albums"></RecordsSummaryList></div>
+} else {
+	<div id="threeSkeletonBlocks" class="skeleton-lines">
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+}
+
+@code {
+
+	List<Album> albums { get; set; }
+	protected override async Task OnInitializedAsync()
+	{
+		var http = new HttpClient();
+		albums = await http.GetFromJsonAsync<List<Album>>("https://localhost:7204/albums");
+	}
+}
