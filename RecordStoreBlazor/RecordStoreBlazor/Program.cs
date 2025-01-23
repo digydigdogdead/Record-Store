@@ -1,4 +1,4 @@
-using RecordStoreBlazor.Client.Pages;
+using RecordStoreBlazor.Client;
 using RecordStoreBlazor.Components;
 
 var builder = WebApplication.CreateBuilder(args);
