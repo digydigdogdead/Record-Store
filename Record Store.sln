@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Record Store", "Record Store\Record Store.csproj", "{80BA0F31-BD40-48E5-866F-A387B84AB418}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Record Store", "Record Store\Record Store.csproj", "{80BA0F31-BD40-48E5-866F-A387B84AB418}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordStoreTests", "RecordStoreTests\RecordStoreTests.csproj", "{A58C030A-3A60-498C-B77D-AD63267B8D1B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordStoreTests", "RecordStoreTests\RecordStoreTests.csproj", "{A58C030A-3A60-498C-B77D-AD63267B8D1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordStoreBlazor", "RecordStoreBlazor\RecordStoreBlazor\RecordStoreBlazor.csproj", "{BD55883E-DBF8-486F-BBDB-7CF748E70A60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordStoreBlazor.Client", "RecordStoreBlazor\RecordStoreBlazor.Client\RecordStoreBlazor.Client.csproj", "{37609C22-2951-49AC-AD96-A0336884F83E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{A58C030A-3A60-498C-B77D-AD63267B8D1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A58C030A-3A60-498C-B77D-AD63267B8D1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A58C030A-3A60-498C-B77D-AD63267B8D1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD55883E-DBF8-486F-BBDB-7CF748E70A60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD55883E-DBF8-486F-BBDB-7CF748E70A60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD55883E-DBF8-486F-BBDB-7CF748E70A60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD55883E-DBF8-486F-BBDB-7CF748E70A60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37609C22-2951-49AC-AD96-A0336884F83E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37609C22-2951-49AC-AD96-A0336884F83E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37609C22-2951-49AC-AD96-A0336884F83E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37609C22-2951-49AC-AD96-A0336884F83E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
