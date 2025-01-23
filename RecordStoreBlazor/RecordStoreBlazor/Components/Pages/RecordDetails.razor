@@ -1,0 +1,59 @@
+﻿@using Record_Store;
+
+<h3 class="title is-size-4">Record Editor: @album.Name</h3>
+<div id="formAndButton" class="grid">
+	<div id="form" class="fixed-grid">
+		<div>
+			<p>Name:</p>
+			<p>@album.Name</p>
+			<InputText @bind-Value="newTitle" @bind-Value:event="onchange"></InputText>
+		</div>
+		<div>
+			<p>Artist:</p>
+			<p>@album.Artist</p>
+			<InputText @bind-Value="newArtist" @bind-Value:event="onchange"></InputText>
+		</div>
+		<div>
+			<p>Year:</p>
+			<p>@album.Year</p>
+			<InputText @bind-Value="newYear" @bind-Value:event="onchange"></InputText>
+		</div>
+		<div>
+			<p>Genre:</p>
+			<p>@album.ParentGenre.ToString()</p>
+			<InputSelect @bind-Value="newParentGenre" @bind-Value:event="onchange">
+				@foreach (var genre in Enum.GetValues(typeof(ParentGenre)))
+				{
+					<option>@genre</option>
+				}
+			</InputSelect>
+		</div>
+		<div>
+			<p>Subgenre:</p>
+			<p>@album.Subgenre</p>
+			<InputText @bind-Value="newSubgenre" @bind-Value:event="onchange"></InputText>
+		</div>
+	</div>
+	<div class="cell is-one-third">
+		<button class="button is-white is-big is-centered">Save Changes</button>
+	</div>
+</div>
+
+@code {
+	[Parameter]
+	public Album album { get; set; } = new Album
+		{
+			Name = "Take Me Back To Eden",
+			Artist = "Sleep Token",
+			Id = 1,
+			ParentGenre = ParentGenre.METAL,
+			Subgenre = "Alternative Metal",
+			Year = 2023
+		};
+
+	public string newTitle { get; set; }
+	public string newArtist { get; set; }
+	public ParentGenre newParentGenre { get; set; }
+	public string newSubgenre { get; set; }
+	public string newYear { get; set; }
+}
