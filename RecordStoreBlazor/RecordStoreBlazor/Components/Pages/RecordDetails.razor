@@ -55,27 +55,34 @@
 			Year = 2023
 		};
 
-
-
-
-	public string newTitle { get; set; }
-	public string newArtist { get; set; }
-	public ParentGenre newParentGenre { get; set; }
-	public string newSubgenre { get; set; }
-	public string newYear { get; set; }
-
 	public Album tempAlbum = new();
 
 
 	public void SaveChanges()
 	{
 
-		if(album.Name != Model.Name && !String.IsNullOrEmpty(Model.Name))
+		if (!String.IsNullOrEmpty(Model.Name))
 		{
 			album.Name = Model.Name;
 		}
 
-		
+		if (!String.IsNullOrEmpty(Model.Artist))
+		{
+			album.Artist = Model.Artist;
+		}
+
+		album.ParentGenre = Model.ParentGenre;
+
+		if (!String.IsNullOrEmpty(Model.Subgenre))
+		{
+			album.Subgenre = Model.Subgenre;
+		}
+
+		if (Model.Year != 0)
+		{
+			album.Year = Model.Year;
+		}
+
 		StateHasChanged();
 	}
 }
