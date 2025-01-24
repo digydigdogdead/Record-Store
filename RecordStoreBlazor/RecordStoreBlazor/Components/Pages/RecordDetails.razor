@@ -7,22 +7,22 @@
 		<div>
 			<p>Name:</p>
 			<p id="displayName">@album.Name</p>
-			<InputText @bind-Value="newTitle" @bind-Value:event="onchange"></InputText>
+			<InputText @bind-Value="Model.Name" @bind-Value:event="onchange"></InputText>
 		</div>
 		<div>
 			<p>Artist:</p>
 			<p>@album.Artist</p>
-			<InputText @bind-Value="newArtist" @bind-Value:event="onchange"></InputText>
+			<InputText @bind-Value="Model.Artist" @bind-Value:event="onchange"></InputText>
 		</div>
 		<div>
 			<p>Year:</p>
 			<p>@album.Year</p>
-			<InputText @bind-Value="newYear" @bind-Value:event="onchange"></InputText>
+			<InputNumber @bind-Value="Model.Year" @bind-Value:event="onchange"></InputNumber>
 		</div>
 		<div>
 			<p>Genre:</p>
 			<p>@album.ParentGenre.ToString()</p>
-			<InputSelect @bind-Value="newParentGenre" @bind-Value:event="onchange">
+			<InputSelect @bind-Value="Model.ParentGenre" @bind-Value:event="onchange">
 				@foreach (var genre in Enum.GetValues(typeof(ParentGenre)))
 				{
 					<option>@genre</option>
@@ -32,7 +32,7 @@
 		<div>
 			<p>Subgenre:</p>
 			<p>@album.Subgenre</p>
-			<InputText @bind-Value="newSubgenre" @bind-Value:event="onchange"></InputText>
+			<InputText @bind-Value="Model.Subgenre" @bind-Value:event="onchange"></InputText>
 		</div>
 	</div>
 	<div class="cell is-one-third">
@@ -42,7 +42,7 @@
 
 @code {
 	[SupplyParameterFromForm]
-	private Album? Model { get; set; }
+	private Album? Model { get; set; } = new();
 
 	[Parameter]
 	public Album album { get; set; } = new Album
@@ -70,13 +70,10 @@
 	public void SaveChanges()
 	{
 
-		if(album.Name != newTitle && !String.IsNullOrEmpty(newTitle))
+		if(album.Name != Model.Name && !String.IsNullOrEmpty(Model.Name))
 		{
-			album.Name = newTitle;
-			Console.WriteLine(album.Name);
+			album.Name = Model.Name;
 		}
-
-		Console.WriteLine("This bit is firing");
 
 		
 		StateHasChanged();
