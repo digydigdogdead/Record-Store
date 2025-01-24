@@ -1,11 +1,12 @@
-﻿@using Record_Store;
+﻿@rendermode InteractiveAuto
+@using Record_Store;
 
 <h3 class="title is-size-4">Record Editor: @album.Name</h3>
-<div id="formAndButton" class="grid">
+<EditForm Model="Model" id="formAndButton" class="grid" OnSubmit="SaveChanges" FormName="detailsForm">
 	<div id="form" class="fixed-grid">
 		<div>
 			<p>Name:</p>
-			<p>@album.Name</p>
+			<p id="displayName">@album.Name</p>
 			<InputText @bind-Value="newTitle" @bind-Value:event="onchange"></InputText>
 		</div>
 		<div>
@@ -37,9 +38,12 @@
 	<div class="cell is-one-third">
 		<button class="button is-white is-big is-centered">Save Changes</button>
 	</div>
-</div>
+</EditForm>
 
 @code {
+	[SupplyParameterFromForm]
+	private Album? Model { get; set; }
+
 	[Parameter]
 	public Album album { get; set; } = new Album
 		{
@@ -51,9 +55,30 @@
 			Year = 2023
 		};
 
+
+
+
 	public string newTitle { get; set; }
 	public string newArtist { get; set; }
 	public ParentGenre newParentGenre { get; set; }
 	public string newSubgenre { get; set; }
 	public string newYear { get; set; }
+
+	public Album tempAlbum = new();
+
+
+	public void SaveChanges()
+	{
+
+		if(album.Name != newTitle && !String.IsNullOrEmpty(newTitle))
+		{
+			album.Name = newTitle;
+			Console.WriteLine(album.Name);
+		}
+
+		Console.WriteLine("This bit is firing");
+
+		
+		StateHasChanged();
+	}
 }
