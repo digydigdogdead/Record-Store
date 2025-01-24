@@ -94,6 +94,12 @@ namespace Record_Store.Models
                 oldAlbum.Artist = albumUpdate.Artist;
             }
 
+            if (albumUpdate.ParentGenre != null && albumUpdate.ParentGenre != oldAlbum.ParentGenre)
+            {
+                oldAlbum.ParentGenre = (ParentGenre)albumUpdate.ParentGenre;
+            }
+                
+
             if (!String.IsNullOrEmpty(albumUpdate.Subgenre) &&
                 albumUpdate.Subgenre != oldAlbum.Subgenre)
             {
