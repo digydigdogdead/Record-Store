@@ -37,12 +37,13 @@
 	</div>
 	<div class="cell is-one-third">
 		<button class="button is-white is-big is-centered">Save Changes</button>
+		<p>@errorMessage</p>
 	</div>
 </EditForm>
 
 @code {
 	[SupplyParameterFromForm]
-	private Album? Model { get; set; } = new();
+	private AlbumDTO? Model { get; set; } = new();
 
 	[Parameter]
 	public Album album { get; set; } = new Album
@@ -55,32 +56,25 @@
 			Year = 2023
 		};
 
-	public Album tempAlbum = new();
+	string errorMessage = "";
+	HttpClient http = new HttpClient();
 
-
-	public void SaveChanges()
+	protected override async Task OnInitializedAsync()
 	{
+		album = await http.GetFromJsonAsync<Album>("https://localhost:7204/albums/1");
+	}
 
-		if (!String.IsNullOrEmpty(Model.Name))
+	public async Task SaveChanges()
+	{
+		try
 		{
-			album.Name = Model.Name;
+			var result = await http.PatchAsJsonAsync<AlbumDTO>($"https://localhost:7204/albums/{album.Id}", Model);
+			if (result.IsSuccessStatusCode) errorMessage = "Success";
+			else errorMessage = result.StatusCode.ToString();
 		}
-
-		if (!String.IsNullOrEmpty(Model.Artist))
+		catch (Exception ex)
 		{
-			album.Artist = Model.Artist;
-		}
-
-		album.ParentGenre = Model.ParentGenre;
-
-		if (!String.IsNullOrEmpty(Model.Subgenre))
-		{
-			album.Subgenre = Model.Subgenre;
-		}
-
-		if (Model.Year != 0)
-		{
-			album.Year = Model.Year;
+			errorMessage = ex.Message;
 		}
 
 		StateHasChanged();
