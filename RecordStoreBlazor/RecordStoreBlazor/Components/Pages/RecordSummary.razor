@@ -13,13 +13,5 @@
 
 @code {
 	[Parameter]
-	public Album Record { get; set; } = new Album
-		{
-			Name = "Take Me Back To Eden",
-			Artist = "Sleep Token",
-			Id = 1,
-			ParentGenre = ParentGenre.METAL,
-			Subgenre = "Alternative Metal",
-			Year = 2023
-		};
+	public Album Record { get; set; } = new Album();
 }

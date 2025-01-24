@@ -1,0 +1,19 @@
+﻿@using Record_Store;
+
+@page "/albums/{id:int}"
+
+<p>@errorMessage</p>
+
+<RecordDetails Id="id"></RecordDetails>
+
+@code {
+	string errorMessage = "";
+
+	[Parameter]
+	public int id { get; set; }
+
+	Album album = new();
+
+	HttpClient http = new();
+
+}

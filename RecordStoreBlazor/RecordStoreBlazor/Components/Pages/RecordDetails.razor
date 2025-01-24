@@ -45,29 +45,24 @@
 	[SupplyParameterFromForm]
 	private AlbumDTO? Model { get; set; } = new();
 
+	public Album album { get; set; } = new Album();
+
 	[Parameter]
-	public Album album { get; set; } = new Album
-		{
-			Name = "Take Me Back To Eden",
-			Artist = "Sleep Token",
-			Id = 1,
-			ParentGenre = ParentGenre.METAL,
-			Subgenre = "Alternative Metal",
-			Year = 2023
-		};
+	public int Id { get; set; }
 
 	string errorMessage = "";
 	HttpClient http = new HttpClient();
 
 	protected override async Task OnInitializedAsync()
 	{
-		album = await http.GetFromJsonAsync<Album>("https://localhost:7204/albums/1");
+		album = await http.GetFromJsonAsync<Album>($"https://localhost:7204/albums/{Id}");
 	}
 
 	public async Task SaveChanges()
 	{
 		try
 		{
+			Model.Id = Id;
 			var result = await http.PatchAsJsonAsync<AlbumDTO>($"https://localhost:7204/albums/{album.Id}", Model);
 			if (result.IsSuccessStatusCode) errorMessage = "Success";
 			else errorMessage = result.StatusCode.ToString();
