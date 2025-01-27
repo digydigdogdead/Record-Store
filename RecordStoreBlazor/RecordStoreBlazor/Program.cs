@@ -24,6 +24,8 @@ else
 
 app.UseHttpsRedirection();
 
+app.UseStatusCodePagesWithRedirects("/error/{0}");
+
 app.UseStaticFiles();
 app.UseAntiforgery();
 
