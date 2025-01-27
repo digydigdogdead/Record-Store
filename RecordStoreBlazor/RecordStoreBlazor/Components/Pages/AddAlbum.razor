@@ -1,0 +1,82 @@
+﻿@using Record_Store
+@page "/albums/add"
+@rendermode InteractiveServer
+
+<h3 class="title">Add an Album</h3>
+
+<p>Please input your album details below:</p>
+
+<EditForm FormName="AddAlbumForm" Model="@Model" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="InvalidSubmit">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+	<div>
+		<p>Artist: </p>
+		<InputText class="field" id="artist" placeholder="Artist" @bind-Value="Model.Artist" />
+	</div>
+	<div>
+		<p>Name: </p>
+		<InputText class="field" id="name" placeholder="Album Name" @bind-Value="Model.Name" />
+	</div>
+	<div>
+		<p>Year: </p>
+		<InputNumber class="field" id="year" @bind-Value="Model.Year" />
+	</div>
+	<div>
+		<p>Genre: </p>
+		<InputSelect class="field" id="parentGenre" @bind-Value="Model.ParentGenre" >
+			@foreach (var genre in Enum.GetValues(typeof(ParentGenre)))
+			{
+				<option>@genre</option>
+			}
+		</InputSelect>
+	</div>
+	<div>
+		<p>Subgenre:</p>
+		<InputText class="field" placeholder="Subgenre? (optional)" id="subgenre" @bind-Value="Model.Subgenre"  />
+	</div>
+	<button class="button" type="submit">Add Album</button>
+	<p>@resultMessage</p>
+
+</EditForm>
+
+@code {
+	[Parameter]
+	public Album Model { get; set; } = new();
+
+	public string resultMessage = "";
+
+	HttpClient http = new();
+
+	protected override void OnInitialized()
+	{
+
+	}
+
+	public async Task HandleValidSubmit()
+	{
+		/*
+		convertedAlbum.Id = 0;
+		convertedAlbum.Year = Model.Year;
+		if (Model.Subgenre != null) convertedAlbum.Subgenre = Model.Subgenre;
+		convertedAlbum.ParentGenre = (Record_Store.ParentGenre)Model.ParentGenre;
+		convertedAlbum.Artist = Model.Artist;
+		convertedAlbum.Name = Model.Name; */
+		
+
+		try
+		{
+
+			await http.PostAsJsonAsync<Album>("https://localhost:7204/albums", Model);
+			resultMessage = "Success!";
+		}
+		catch (Exception ex)
+		{
+			resultMessage = ex.Message;
+		}
+	}
+
+	public void InvalidSubmit()
+	{
+		resultMessage = "Oopsie";
+	}
+}

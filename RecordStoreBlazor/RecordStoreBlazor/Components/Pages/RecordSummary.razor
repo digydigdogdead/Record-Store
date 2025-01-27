@@ -1,6 +1,8 @@
 ﻿@using Record_Store;
+@inject NavigationManager nav;
+@rendermode InteractiveServer
 
-<div class="column is-one-third">
+<div class="column is-one-third" @onclick="RedirectToAlbum">
 	<div class="box m-2">
 		<h3 class="is-size-3 has-text-centered has-text-weight-semibold">@Record.Name</h3>
 		<h4 class="is-size-4 has-text-centered">@Record.Artist</h4>
@@ -14,4 +16,8 @@
 @code {
 	[Parameter]
 	public Album Record { get; set; } = new Album();
+
+	public void RedirectToAlbum() =>
+		nav.NavigateTo($"/albums/{Record.Id}");
+	
 }

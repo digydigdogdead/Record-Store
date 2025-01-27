@@ -39,10 +39,17 @@ namespace Record_Store.Services
                 return null;
             }
 
+
             if (String.IsNullOrEmpty(album.Subgenre))
             {
                 album.Subgenre = album.ParentGenre.ToString();
             }
+
+            var allAlbums = _model.GetAllAlbums();
+            var highestId = (from a in allAlbums
+                             select a.Id).Max();
+
+            album.Id = highestId + 1;
 
             return _model.PostAlbum(album, out feedback);
         }
