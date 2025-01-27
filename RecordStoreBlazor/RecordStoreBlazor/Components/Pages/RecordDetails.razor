@@ -4,6 +4,8 @@
 
 <h3 class="title is-size-4">Record Editor: @album.Name</h3>
 <EditForm Model="Model" id="formAndButton" class="grid" OnSubmit="SaveChanges" FormName="detailsForm">
+	<DataAnnotationsValidator />
+	<ValidationSummary/>
 	<div id="form" class="fixed-grid">
 		<div>
 			<p>Name:</p>
