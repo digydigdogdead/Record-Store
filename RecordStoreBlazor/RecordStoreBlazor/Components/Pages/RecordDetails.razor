@@ -1,4 +1,5 @@
-﻿@rendermode InteractiveAuto
+﻿@rendermode InteractiveServer
+@inject NavigationManager nav
 @using Record_Store;
 
 <h3 class="title is-size-4">Record Editor: @album.Name</h3>
@@ -55,7 +56,14 @@
 
 	protected override async Task OnInitializedAsync()
 	{
-		album = await http.GetFromJsonAsync<Album>($"https://localhost:7204/albums/{Id}");
+		try
+		{
+			album = await http.GetFromJsonAsync<Album?>($"https://localhost:7204/albums/{Id}");
+		}
+		catch (Exception ex)
+		{
+			nav.NavigateTo("/error/404");
+		}
 	}
 
 	public async Task SaveChanges()
