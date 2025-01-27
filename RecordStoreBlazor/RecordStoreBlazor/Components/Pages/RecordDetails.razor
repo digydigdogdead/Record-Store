@@ -8,22 +8,22 @@
 		<div>
 			<p>Name:</p>
 			<p id="displayName">@album.Name</p>
-			<InputText @bind-Value="Model.Name" @bind-Value:event="onchange"></InputText>
+			<InputText @bind-Value="Model.Name" />
 		</div>
 		<div>
 			<p>Artist:</p>
 			<p>@album.Artist</p>
-			<InputText @bind-Value="Model.Artist" @bind-Value:event="onchange"></InputText>
+			<InputText @bind-Value="Model.Artist" />
 		</div>
 		<div>
 			<p>Year:</p>
 			<p>@album.Year</p>
-			<InputNumber @bind-Value="Model.Year" @bind-Value:event="onchange"></InputNumber>
+			<InputNumber @bind-Value="Model.Year" />
 		</div>
 		<div>
 			<p>Genre:</p>
 			<p>@album.ParentGenre.ToString()</p>
-			<InputSelect @bind-Value="Model.ParentGenre" @bind-Value:event="onchange">
+			<InputSelect @bind-Value="Model.ParentGenre" >
 				@foreach (var genre in Enum.GetValues(typeof(ParentGenre)))
 				{
 					<option>@genre</option>
@@ -33,7 +33,7 @@
 		<div>
 			<p>Subgenre:</p>
 			<p>@album.Subgenre</p>
-			<InputText @bind-Value="Model.Subgenre" @bind-Value:event="onchange"></InputText>
+			<InputText @bind-Value="Model.Subgenre" />
 		</div>
 	</div>
 	<div class="cell is-one-third">
@@ -80,6 +80,6 @@
 			errorMessage = ex.Message;
 		}
 
-		StateHasChanged();
+		album = await http.GetFromJsonAsync<Album?>($"https://localhost:7204/albums/{Id}");
 	}
 }

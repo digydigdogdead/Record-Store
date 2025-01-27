@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -10,6 +10,10 @@
     <ProjectReference Include="..\..\Record Store\Record Store.csproj" />
     <ProjectReference Include="..\RecordStoreBlazor.Client\RecordStoreBlazor.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Components\Dataclasses\" />
   </ItemGroup>
 
 </Project>
