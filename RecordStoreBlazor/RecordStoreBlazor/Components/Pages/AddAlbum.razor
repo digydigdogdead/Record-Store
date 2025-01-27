@@ -1,0 +1,46 @@
+﻿@using Record_Store
+@page "/albums/add"
+@rendermode InteractiveAuto
+
+<h3 class="title">Add an Album</h3>
+
+<p>Please input your album details below:</p>
+
+<EditForm FormName="AddAlbumForm" Model="@Model" OnValidSubmit="HandleValidSubmit">
+	<div>
+		<p>Artist: </p>
+		<InputText class="field" id="artist" placeholder="Artist" @bind-Value="Model.Artist" @bind-Value:event="onchange" />
+	</div>
+	<div>
+		<p>Name: </p>
+		<InputText class="field" id="name" placeholder="Album Name" @bind-Value="Model.Name" @bind-Value:event="onchange" />
+	</div>
+	<div>
+		<p>Year: </p>
+		<InputNumber class="field" id="year" @bind-Value="Model.Year" @bind-Value:event="onchange" />
+	</div>
+	<div>
+		<p>Genre: </p>
+		<InputSelect class="field" id="parentGenre" @bind-Value="Model.ParentGenre" @bind-Value:event="onchange">
+			@foreach (var genre in Enum.GetValues(typeof(ParentGenre)))
+			{
+				<option>@genre</option>
+			}
+		</InputSelect>
+	</div>
+	<div>
+		<p>Subgenre:</p>
+		<InputText class="field" placeholder="Subgenre? (optional)" id="subgenre" @bind-Value="Model.Subgenre" @bind-Value:event="onchange" />
+	</div>
+	<button class="button" type="submit">Add Album</button>
+
+</EditForm>
+
+@code {
+	[Parameter]
+	public Album Model { get; set; } = new();
+	public void HandleValidSubmit()
+	{
+		
+	}
+}
