@@ -1,0 +1,34 @@
+﻿@using Record_Store;
+
+@if (albums != null && albums.Count != 0)
+{
+	<div><RecordsSummaryList Albums="albums"></RecordsSummaryList></div>
+} else if (!String.IsNullOrEmpty(errorMessage))
+{
+	<p>@errorMessage</p>
+} else {
+	<div id="threeSkeletonBlocks" class="skeleton-lines">
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+		<div></div>
+	</div>
+}
+
+@code {
+	string errorMessage = "";
+	List<Album> albums { get; set; }
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			var http = new HttpClient();
+			albums = await http.GetFromJsonAsync<List<Album>>("https://localhost:7204/albums");
+		}
+		catch (Exception ex)
+		{
+			errorMessage = ex.Message;
+		}
+	}
+}

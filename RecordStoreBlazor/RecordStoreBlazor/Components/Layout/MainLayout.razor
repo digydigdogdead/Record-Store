@@ -1,0 +1,31 @@
+﻿@using RecordStoreBlazor.Components.Pages;
+@inherits LayoutComponentBase
+
+<header class="hero is-primary">
+    <div class="hero-body">
+        <h1 class="title">Legally Acquired Music</h1>
+        <h2 class="subtitle">Where you can buy music that we bought for slightly more than we bought it for so that we can make money and continue to do this.</h2>
+    </div>
+    <NavMenu></NavMenu>
+</header>
+<div class="page">
+
+    <main>
+        <article class="has-background-primary-invert">
+            @Body
+        </article>
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Carlyle Laurent</p>
+        <p>2025</p>
+    </div>
+</footer>
+
+<div id="blazor-error-ui">
+    An unhandled error has occurred.
+    <a href="" class="reload">Reload</a>
+    <a class="dismiss">🗙</a>
+</div>

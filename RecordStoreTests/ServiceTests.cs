@@ -91,8 +91,9 @@ namespace RecordStoreTests
             Album emptyAlbum = new Album();
             
             modelMock.Setup(m => m.PostAlbum(newAlbum, out testFeedback)).Returns(newAlbum);
+			modelMock.Setup(m => m.GetAllAlbums()).Returns(testAlbums);
 
-            var result = albumService.PostAlbum(newAlbum, out testFeedback);
+			var result = albumService.PostAlbum(newAlbum, out testFeedback);
 
             result.Should().BeEquivalentTo(newAlbum);
         }
@@ -121,8 +122,9 @@ namespace RecordStoreTests
             };
             
             modelMock.Setup(m => m.PostAlbum(newAlbum, out testFeedback)).Returns(expectedEditedAlbum);
+			modelMock.Setup(m => m.GetAllAlbums()).Returns(testAlbums);
 
-            var result = albumService.PostAlbum(newAlbum, out testFeedback);
+			var result = albumService.PostAlbum(newAlbum, out testFeedback);
 
             result.Should().BeEquivalentTo(expectedEditedAlbum);
         }
@@ -153,6 +155,7 @@ namespace RecordStoreTests
             };
 
             modelMock.Setup(m => m.PostAlbum(newAlbum, out testFeedback)).Returns(newAlbum);
+            modelMock.Setup(m => m.GetAllAlbums()).Returns(testAlbums);
 
             albumService.PostAlbum(newAlbum, out testFeedback);
 

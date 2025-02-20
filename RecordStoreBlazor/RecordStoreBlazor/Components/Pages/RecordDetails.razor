@@ -1,0 +1,87 @@
+﻿@rendermode InteractiveServer
+@inject NavigationManager nav
+@using Record_Store;
+
+<h3 class="title is-size-4">Record Editor: @album.Name</h3>
+<EditForm Model="Model" id="formAndButton" class="grid" OnSubmit="SaveChanges" FormName="detailsForm">
+	<DataAnnotationsValidator />
+	<ValidationSummary/>
+	<div id="form" class="fixed-grid">
+		<div>
+			<p>Name:</p>
+			<p id="displayName">@album.Name</p>
+			<InputText @bind-Value="Model.Name" />
+		</div>
+		<div>
+			<p>Artist:</p>
+			<p>@album.Artist</p>
+			<InputText @bind-Value="Model.Artist" />
+		</div>
+		<div>
+			<p>Year:</p>
+			<p>@album.Year</p>
+			<InputNumber @bind-Value="Model.Year" />
+		</div>
+		<div>
+			<p>Genre:</p>
+			<p>@album.ParentGenre.ToString()</p>
+			<InputSelect @bind-Value="Model.ParentGenre" >
+				@foreach (var genre in Enum.GetValues(typeof(ParentGenre)))
+				{
+					<option>@genre</option>
+				}
+			</InputSelect>
+		</div>
+		<div>
+			<p>Subgenre:</p>
+			<p>@album.Subgenre</p>
+			<InputText @bind-Value="Model.Subgenre" />
+		</div>
+	</div>
+	<div class="cell is-one-third">
+		<button class="button is-white is-big is-centered">Save Changes</button>
+		<p>@errorMessage</p>
+	</div>
+</EditForm>
+
+@code {
+	[SupplyParameterFromForm]
+	private AlbumDTO? Model { get; set; } = new();
+
+	public Album album { get; set; } = new Album();
+
+	[Parameter]
+	public int Id { get; set; }
+
+	string errorMessage = "";
+	HttpClient http = new HttpClient();
+
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			album = await http.GetFromJsonAsync<Album?>($"https://localhost:7204/albums/{Id}");
+		}
+		catch (Exception ex)
+		{
+			nav.NavigateTo("/error/404");
+		}
+	}
+
+	public async Task SaveChanges()
+	{
+		try
+		{
+			Model.Id = Id;
+			var result = await http.PatchAsJsonAsync<AlbumDTO>($"https://localhost:7204/albums/{album.Id}", Model);
+			if (result.IsSuccessStatusCode) errorMessage = "Success";
+			else errorMessage = result.StatusCode.ToString();
+		}
+		catch (Exception ex)
+		{
+			errorMessage = ex.Message;
+		}
+
+		album = await http.GetFromJsonAsync<Album?>($"https://localhost:7204/albums/{Id}");
+	}
+}

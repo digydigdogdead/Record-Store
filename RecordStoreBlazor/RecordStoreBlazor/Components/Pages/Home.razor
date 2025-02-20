@@ -1,0 +1,16 @@
+﻿@using Record_Store;
+@using RecordStoreBlazor.Components.Pages;
+@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<!--<RecordsLoader></RecordsLoader>-->
+<!--<RecordDetails></RecordDetails>-->
+
+@code {
+	List<Album> albums = new List<Album>
+	{
+		new Album { Id = 1, Artist = "Sleep Token", Name = "Take Me Back To Eden", Year = 2023, ParentGenre = ParentGenre.METAL, Subgenre = "Alternative Metal" },
+		new Album { Id = 2, Artist = "Various Artists", Name = "Madagascar: Escape 2 Africa", Year = 2008, ParentGenre = ParentGenre.CLASSICAL, Subgenre = "Soundtrack" }
+	};
+}
