@@ -1,16 +1,12 @@
 ﻿@using Record_Store;
 @using RecordStoreBlazor.Components.Pages;
+@rendermode InteractiveAuto
 @page "/"
 
 <PageTitle>Home</PageTitle>
 
-<!--<RecordsLoader></RecordsLoader>-->
-<!--<RecordDetails></RecordDetails>-->
+<p>Welcome to Legally Acquired Music! Please <NavLink href="/albums">click here to see our available albums</NavLink>, or <NavLink href="/albums/add">click here to add a new one</NavLink>!</p>
 
 @code {
-	List<Album> albums = new List<Album>
-	{
-		new Album { Id = 1, Artist = "Sleep Token", Name = "Take Me Back To Eden", Year = 2023, ParentGenre = ParentGenre.METAL, Subgenre = "Alternative Metal" },
-		new Album { Id = 2, Artist = "Various Artists", Name = "Madagascar: Escape 2 Africa", Year = 2008, ParentGenre = ParentGenre.CLASSICAL, Subgenre = "Soundtrack" }
-	};
+
 }
